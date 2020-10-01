@@ -909,12 +909,6 @@ static int xpadneo_raw_event(struct hid_device *hdev, struct hid_report *report,
 		data[16] = 0;
 	}
 
-	/* swap button A with B and X with Y for Nintendo style controllers */
-	if ((xdata->quirks & XPADNEO_QUIRK_NINTENDO) && report->id == 1 && reportsize >= 15) {
-		data[14] = SWAP_BITS(data[14], 0, 1);
-		data[14] = SWAP_BITS(data[14], 2, 3);
-	}
-
 	if (report->id == 1 && reportsize == 55) {
 		/* XBE2: track the current controller profile */
 		xpadneo_switch_profile(xdata, data[35] & 0x03, false);
